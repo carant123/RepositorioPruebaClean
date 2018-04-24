@@ -1,0 +1,85 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.example.ccruzado.formulario"
+        minSdkVersion 18
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+
+
+
+
+
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
+
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
+    compile ('com.squareup.retrofit:converter-simplexml:1.6.1') {
+        exclude group: 'stax', module: 'stax-api'
+        exclude group: 'stax', module: 'stax'
+        exclude group: 'xpp3', module: 'xpp3'
+    }
+    compile 'joda-time:joda-time:2.3'
+    compile 'org.joda:joda-convert:1.6'
+
+
+    implementation "com.squareup.retrofit2:retrofit:${retrofit_v}"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:${retrofit_v}"
+    implementation "com.squareup.retrofit2:converter-gson:${retrofit_v}"
+    implementation "com.squareup.retrofit2:converter-simplexml:${retrofit_v}"
+    implementation "com.squareup.okhttp3:okhttp:${okthttp_v}"
+
+    implementation "io.reactivex.rxjava2:rxandroid:${rxandroid_v}"
+
+    implementation "com.squareup.picasso:picasso:${picasso_v}"
+
+    implementation "com.jakewharton:butterknife:${butterknife_v}"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${butterknife_v}"
+
+    implementation "com.google.dagger:dagger:${dagger_v}"
+    annotationProcessor "com.google.dagger:dagger-compiler:${dagger_v}"
+
+
+    // Room (use 1.1.0-alpha2 for latest alpha)
+    implementation "android.arch.persistence.room:runtime:${room_v}"
+    annotationProcessor "android.arch.persistence.room:compiler:${room_v}"
+
+
+
+
+
+
+
+
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+}
+
+
+buildscript {
+    ext.room_v = '1.0.0'
+    ext.retrofit_v = '2.3.0'
+    ext.okthttp_v = '3.9.1'
+    ext.picasso_v = '2.5.2'
+    ext.butterknife_v = '8.8.1'
+    ext.dagger_v = '2.11'
+    ext.rxandroid_v = '2.0.2'
+}
