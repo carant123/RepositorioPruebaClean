@@ -37,10 +37,11 @@ public class NetModule {
         Retrofit retrofit = new Retrofit.Builder()
                 .client(okHttpClient)
                 //.baseUrl("http://restcountries.eu/")
-                .baseUrl("https://reqres.in")
+                .baseUrl("http://10.229.118.77:8080/PruebaService/")
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
+
 
         return retrofit.create(ApiRestService.class);
     }

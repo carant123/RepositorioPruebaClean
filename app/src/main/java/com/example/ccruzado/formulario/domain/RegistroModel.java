@@ -22,6 +22,7 @@ public class RegistroModel implements ListaDatosMVP.Model {
 
     @Override
     public Observable<ArrayList<RegistroDomain>> registros() {
+
         return this.repositorio.listaDeDatos();
     }
 

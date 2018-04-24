@@ -72,6 +72,7 @@ public class ListaDatosRepository implements ListaDatosIRepository {
             @Override
             public void accept(ArrayList<RegistroDomain> registrosDomain) throws Exception {
                 //registros.add(registrosDomain);
+                Log.d("dataInfo", "cantidad " + registrosDomain.size());
                 registros = registrosDomain;
             }
         });

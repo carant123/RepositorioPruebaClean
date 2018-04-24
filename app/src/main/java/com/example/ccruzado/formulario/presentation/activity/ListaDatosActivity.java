@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -66,8 +67,26 @@ public class ListaDatosActivity extends BaseActivity implements ListaDatosMVP.Vi
 
     @Override
     public void ObtenerInformacionDeRegistros(ArrayList<RegistroView> registrosRecibidos) {
-        registros = registrosRecibidos;
-        listaDatosAdapter.notifyItemInserted(registros.size() - 1);
+        Log.d("dataInfo2", "cantidad " + registrosRecibidos.size());
+        Log.d("dataInfo2", "cantidad " + registrosRecibidos.get(0).getNombre());
+        Log.d("dataInfo2", "cantidad " + registrosRecibidos.get(1).getNombre());
+        Log.d("dataInfo2", "cantidad " + registrosRecibidos.get(2).getNombre());
+
+        //registros = registrosRecibidos;
+
+
+
+        for (RegistroView registro : registrosRecibidos) {
+            registros.add(registro);
+        }
+
+        //registros = registrosRecibidos;
+
+        listaDatosAdapter.notifyDataSetChanged();
+
+        Log.d("registros", "cantidad " + registros.size());
+        //listaDatosAdapter.notifyItemInserted(registros.size() - 1);
+        //listaDatosAdapter.notifyDataSetChanged();
     }
 
     @Override

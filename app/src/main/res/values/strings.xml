@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Formulario</string>
+
+    http://10.229.118.77:8080/PruebaService/api/Datos/GetDatos
 </resources>

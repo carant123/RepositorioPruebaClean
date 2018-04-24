@@ -14,7 +14,7 @@ import retrofit2.http.GET;
 
 public interface ApiRestService {
 
-    @GET("/api/unknown")
+    @GET("api/Datos/GetDatos")
     Observable<ArrayList<RegistroData>> listMultiple();
 
 }
