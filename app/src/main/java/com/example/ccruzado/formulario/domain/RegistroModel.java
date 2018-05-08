@@ -1,5 +1,6 @@
 package com.example.ccruzado.formulario.domain;
 
+import com.example.ccruzado.formulario.data.model.RegistroData;
 import com.example.ccruzado.formulario.data.repository.interfaces.ListaDatosIRepository;
 import com.example.ccruzado.formulario.domain.model.RegistroDomain;
 import com.example.ccruzado.formulario.presentation.interfaces.ListaDatosMVP;
@@ -24,7 +25,10 @@ public class RegistroModel implements ListaDatosMVP.Model {
     public Observable<ArrayList<RegistroDomain>> registros() {
 
         return this.repositorio.listaDeDatos();
+
     }
+
+
 
 
 }

@@ -2,11 +2,13 @@ package com.example.ccruzado.formulario.data.repository;
 
 import android.util.Log;
 
+import com.example.ccruzado.formulario.StartApplication;
 import com.example.ccruzado.formulario.data.api.ApiRestService;
 import com.example.ccruzado.formulario.data.model.RegistroData;
 import com.example.ccruzado.formulario.data.model.mapper.RegistroMapper;
 import com.example.ccruzado.formulario.data.repository.interfaces.ListaDatosIRepository;
 import com.example.ccruzado.formulario.domain.model.RegistroDomain;
+import com.example.ccruzado.formulario.room.AppDatabase;
 
 import java.util.ArrayList;
 
@@ -26,6 +28,12 @@ public class ListaDatosRepository implements ListaDatosIRepository {
     private long timestamp;
     private static final long STALE_MS = 10 * 1000; // Data is stale after 20 seconds
     private RegistroMapper registroMapper;
+
+
+    Observable<ArrayList<RegistroData>> usuariosData;
+
+
+
 
     public ListaDatosRepository(ApiRestService apiRestService, RegistroMapper registroMapper) {
         this.apiRestService = apiRestService;
@@ -78,6 +86,12 @@ public class ListaDatosRepository implements ListaDatosIRepository {
         });
 
     }
+
+/*
+    public Observable<ArrayList<RegistroDomain>> obetenerListaDeDatosLocal(){
+        return
+    }
+*/
 
 
 

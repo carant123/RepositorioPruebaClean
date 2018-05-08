@@ -1,5 +1,6 @@
 package com.example.ccruzado.formulario.data.api;
 
+import com.example.ccruzado.formulario.data.model.PedidoData;
 import com.example.ccruzado.formulario.data.model.RegistroData;
 
 import java.util.ArrayList;
@@ -16,5 +17,8 @@ public interface ApiRestService {
 
     @GET("api/Datos/GetDatos")
     Observable<ArrayList<RegistroData>> listMultiple();
+
+    @GET("api/Datos/GetDatos")
+    Observable<ArrayList<PedidoData>> listPedidos();
 
 }

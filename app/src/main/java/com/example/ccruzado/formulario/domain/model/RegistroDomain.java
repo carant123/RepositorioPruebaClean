@@ -1,5 +1,9 @@
 package com.example.ccruzado.formulario.domain.model;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 /**
  * Created by ccruzado on 23/04/2018.
  */
@@ -7,7 +11,9 @@ package com.example.ccruzado.formulario.domain.model;
 public class RegistroDomain {
 
     private Integer id;
+
     private String nombre;
+
     private Integer numero;
 
     public RegistroDomain() {

@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -33,6 +34,8 @@ public class ListaDatosActivity extends BaseActivity implements ListaDatosMVP.Vi
 
     @BindView(R.id.progress_recycle) ProgressBar progress_recycle;
 
+
+
     @Inject
     ListaDatosMVP.Presenter presenter;
 
@@ -40,7 +43,6 @@ public class ListaDatosActivity extends BaseActivity implements ListaDatosMVP.Vi
     private ListaDatosAdapter listaDatosAdapter;
     private ArrayList<RegistroView> registros = new ArrayList<RegistroView>();
     private static final String TAG = ListaDatosActivity.class.getSimpleName();
-
 
 
     @Override

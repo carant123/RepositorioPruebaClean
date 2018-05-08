@@ -17,12 +17,18 @@
         </activity>
 
         <activity android:name=".presentation.activity.ListaDatosActivity">
+
+        </activity>
+
+        <activity android:name=".presentation.activity.ListaPedidosActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
 
     </application>
 

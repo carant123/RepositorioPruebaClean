@@ -1,15 +1,27 @@
 package com.example.ccruzado.formulario.data.model;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+
 /**
  * Created by ccruzado on 23/04/2018.
  */
 
+@Entity(tableName = "Registro")
 public class RegistroData {
 
+    @PrimaryKey(autoGenerate = true)
     private Integer id;
+
+    @ColumnInfo(name = "nombre")
     private String nombre;
+
+    @ColumnInfo(name = "numero")
     private Integer numero;
 
+    @Ignore
     public RegistroData() {
     }
 
