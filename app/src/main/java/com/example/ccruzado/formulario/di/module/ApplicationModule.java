@@ -40,7 +40,7 @@ public class ApplicationModule {
     }
 
 
-    @Provides
+/*    @Provides
     @Named("executor_thread")
     Scheduler provideExecutorThread() {
         return Schedulers.io();
@@ -51,7 +51,7 @@ public class ApplicationModule {
     @Named("ui_thread")
     Scheduler provideUiThread() {
         return AndroidSchedulers.mainThread();
-    }
+    }*/
 
 
 }

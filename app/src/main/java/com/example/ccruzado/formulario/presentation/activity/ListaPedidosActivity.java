@@ -80,23 +80,25 @@ public class ListaPedidosActivity extends BaseActivity implements ListaPedidosMV
         }
 
         public void afterTextChanged(Editable s) {
-            if (s.length() == 8) {
 
-                pedidos.clear();
-                listaPedidosAdapter.notifyDataSetChanged();
-
-                presenter.loadData(etdni.getText().toString());
-
-            } else{
-
-                if(!pedidos.isEmpty()){
-                    pedidos.clear();
-                    listaPedidosAdapter.notifyDataSetChanged();
+            if(es8CaracteresOllenoDePedidos(s)){
+                borrarElementosDeLaListaPedidos();
+                if(es8Caracteres(s)){
+                    presenter.loadData(etdni.getText().toString());
                 }
-
             }
+
         }
     };
+
+    private boolean es8CaracteresOllenoDePedidos(Editable s) {
+        return s.length() == 8 || !pedidos.isEmpty();
+    }
+
+    private boolean es8Caracteres(Editable s) {
+        return s.length() == 8;
+    }
+
 
     @Override
     public void ObtenerPedidosPendientesPorDNI(ArrayList<PedidoView> pedidosRecibidos) {
@@ -137,6 +139,11 @@ public class ListaPedidosActivity extends BaseActivity implements ListaPedidosMV
     protected void onStop() {
         super.onStop();
         presenter.rxUnsubscribe();
+        borrarElementosDeLaListaPedidos();
+    }
+
+
+    private void borrarElementosDeLaListaPedidos() {
         pedidos.clear();
         listaPedidosAdapter.notifyDataSetChanged();
     }
