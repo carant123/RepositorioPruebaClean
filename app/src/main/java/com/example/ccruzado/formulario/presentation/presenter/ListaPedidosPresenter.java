@@ -23,7 +23,7 @@ public class ListaPedidosPresenter implements ListaPedidosMVP.Presenter {
     private CompositeDisposable compositeDisposable;
     private DisposableObserver disposableObserver;
     private DisposableObserver<ArrayList<PedidoDomain>> disposableObserver_model;
-    private Observable<ArrayList<PedidoDomain>> observable;
+    private Observable<ArrayList<PedidoDomain>> observable = null;
     private PedidoMapper mapper;
 
     private Scheduler backgroundScheduler;
@@ -48,7 +48,9 @@ public class ListaPedidosPresenter implements ListaPedidosMVP.Presenter {
     public void loadData(String Dni) {
         view.showLoading();
 
-        observable = model.obtenerPedidos(Dni)
+
+        observable = model
+                .obtenerPedidos(Dni)
                 .subscribeOn(backgroundScheduler)
                 .observeOn(mainScheduler);
 

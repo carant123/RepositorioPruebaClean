@@ -46,6 +46,10 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:${okthttp_v}"
 
     implementation "io.reactivex.rxjava2:rxandroid:${rxandroid_v}"
+    implementation "io.reactivex.rxjava2:rxjava:${rxjava_v}"
+
+
+
 
     implementation "com.squareup.picasso:picasso:${picasso_v}"
 
@@ -78,4 +82,8 @@ buildscript {
     ext.butterknife_v = '8.8.1'
     ext.dagger_v = '2.11'
     ext.rxandroid_v = '2.0.2'
+    ext.rxjava_v = '2.1.9'
+
+
+
 }

@@ -1,6 +1,9 @@
 package com.example.ccruzado.formulario;
 
 
+import android.util.Log;
+
+import com.example.ccruzado.formulario.domain.PedidoModel;
 import com.example.ccruzado.formulario.domain.model.PedidoDomain;
 import com.example.ccruzado.formulario.presentation.activity.ListaPedidosActivity;
 import com.example.ccruzado.formulario.presentation.interfaces.ListaPedidosMVP;
@@ -8,24 +11,26 @@ import com.example.ccruzado.formulario.presentation.model.PedidoView;
 import com.example.ccruzado.formulario.presentation.model.mapper.PedidoMapper;
 import com.example.ccruzado.formulario.presentation.presenter.ListaPedidosPresenter;
 
+import org.hamcrest.core.IsNull;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.concurrent.Callable;
-
 
 import io.reactivex.Scheduler;
-import io.reactivex.android.plugins.RxAndroidPlugins;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.schedulers.TestScheduler;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.mockito.ArgumentMatchers.isNull;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
 
 public class PresenterTests {
 
@@ -43,14 +48,25 @@ public class PresenterTests {
     ArrayList<PedidoView> pedidosview;
     io.reactivex.Observable<ArrayList<PedidoDomain>> observable;
     PedidoMapper mapper;
+    TestScheduler testScheduler;
 
     @Before
     public void setup() {
 
-
-
-
+        testScheduler = new TestScheduler();
         mockModel = mock(ListaPedidosMVP.Model.class);
+
+        CargaDeInformacion();
+
+        mockView = mock(ListaPedidosMVP.View.class);
+        mapper = new PedidoMapper();
+        presenter = new ListaPedidosPresenter(mockModel,mapper,testScheduler,testScheduler);
+        //presenter = new ListaPedidosPresenter(mockModel,mapper,Schedulers.io(), AndroidSchedulers.mainThread());
+        presenter.setView(mockView);
+
+    }
+
+    private void CargaDeInformacion() {
 
         pedidos = new ArrayList<>();
         pedidosview = new ArrayList<>();
@@ -73,41 +89,50 @@ public class PresenterTests {
 
         observable.fromArray(pedidos);
 
-        mockView = mock(ListaPedidosMVP.View.class);
-        //mockView = mock(ListaPedidosActivity.class);
-        mapper = new PedidoMapper();
-        presenter = new ListaPedidosPresenter(mockModel,mapper,Schedulers.io(), AndroidSchedulers.mainThread());
-        presenter.setView(mockView);
+    }
 
 
+    @Test
+    public void verificar_mockModel_no_es_nulo(){
+        assertThat(mockModel, is(IsNull.notNullValue()));
+    }
 
+    @Test
+    public void verificar_testScheduler_no_es_nulo(){
+        assertThat(testScheduler, is(IsNull.notNullValue()));
+    }
+
+    @Test
+    public void verificar_presenter_no_es_nulo(){
+        assertThat(presenter, is(IsNull.notNullValue()));
+    }
+
+    @Test
+    public void verificar_condicion_no_es_nulo(){
+        assertThat(mockModel.obtenerPedidos("Dni").subscribeOn(testScheduler).observeOn(testScheduler), is(IsNull.notNullValue()));
     }
 
 
     @Test
     public void verificar_la_interaccion_cuando_llamas_a_la_carga_de_datos() {
 
+        if(mockModel == null){
+            Log.d("data","mockModel null");
+        }
 
-        when(mockModel.obtenerPedidos("dni")).thenReturn(observable);
+        if(testScheduler == null){
+            Log.d("data","testScheduler null");
+        }
 
+
+        when(mockModel.obtenerPedidos("Dni")
+                .subscribeOn(testScheduler).observeOn(testScheduler)).thenReturn(observable);
+
+
+        //when(mockModel.obtenerPedidos("Dni")).thenReturn(observable);
         presenter.loadData("Dni");
-
-        //verify model interactions
+        testScheduler.triggerActions();
         verify(mockModel, times(1)).obtenerPedidos("Dni");
-        //verify view interactions
-        //verify(mockView, times(1)).hideLoading();
-
-/*        when(mockModel.getUser()).thenReturn(user);
-
-        presenter.getCurrentUser();
-
-        //verify model interactions
-        verify(mockModel, times(1)).getUser();
-
-        //verify view interactions
-        verify(mockView, times(1)).setFirstName("Fox");
-        verify(mockView, times(1)).setLastName("Mulder");
-        verify(mockView, never()).showUserNotAvailable();*/
 
     }
 
