@@ -1,7 +1,5 @@
 package com.example.ccruzado.formulario.presentation.presenter;
 
-import android.util.Log;
-
 import com.example.ccruzado.formulario.domain.model.PedidoDomain;
 import com.example.ccruzado.formulario.presentation.interfaces.ListaPedidosMVP;
 import com.example.ccruzado.formulario.presentation.model.mapper.PedidoMapper;

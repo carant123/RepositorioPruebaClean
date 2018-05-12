@@ -1,6 +1,8 @@
 package com.example.ccruzado.formulario;
 
 
+import android.util.Log;
+
 import com.example.ccruzado.formulario.domain.model.PedidoDomain;
 import com.example.ccruzado.formulario.presentation.activity.ListaPedidosActivity;
 import com.example.ccruzado.formulario.presentation.interfaces.ListaPedidosMVP;
@@ -8,11 +10,9 @@ import com.example.ccruzado.formulario.presentation.model.PedidoView;
 import com.example.ccruzado.formulario.presentation.model.mapper.PedidoMapper;
 import com.example.ccruzado.formulario.presentation.presenter.ListaPedidosPresenter;
 
-import org.junit.Assert;
+import org.hamcrest.core.IsNull;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
@@ -23,11 +23,12 @@ import java.util.concurrent.Callable;
 import io.reactivex.Scheduler;
 import io.reactivex.android.plugins.RxAndroidPlugins;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.schedulers.TestScheduler;
 import rx.android.plugins.RxAndroidSchedulersHook;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -66,8 +67,6 @@ public class PresenterTests {
         testScheduler = new TestScheduler();
         mockModel = mock(ListaPedidosMVP.Model.class);
 
-
-
         pedidos = new ArrayList<>();
         pedidosview = new ArrayList<>();
 
@@ -95,10 +94,28 @@ public class PresenterTests {
         //presenter = new ListaPedidosPresenter(mockModel,mapper,Schedulers.io(), AndroidSchedulers.mainThread());
         presenter = new ListaPedidosPresenter(mockModel,mapper,testScheduler, testScheduler);
         presenter.setView(mockView);
+    }
 
 
 
+    @Test
+    public void verificar_mockModel_no_es_nulo(){
+        assertThat(mockModel, is(IsNull.notNullValue()));
+    }
 
+    @Test
+    public void verificar_testScheduler_no_es_nulo(){
+        assertThat(testScheduler, is(IsNull.notNullValue()));
+    }
+
+    @Test
+    public void verificar_presenter_no_es_nulo(){
+        assertThat(presenter, is(IsNull.notNullValue()));
+    }
+
+    @Test
+    public void verificar_condicion_no_es_nulo(){
+        assertThat(mockModel.obtenerPedidos("Dni").subscribeOn(testScheduler).observeOn(testScheduler), is(IsNull.notNullValue()));
     }
 
 
@@ -120,6 +137,13 @@ public class PresenterTests {
     public void verificar_la_interaccion_cuando_llamas_a_la_carga_de_datos() {
 
         //observable.fromArray(pedidos);
+        if(mockModel == null){
+            Log.d("data","mockModel null");
+        }
+
+        if(testScheduler == null){
+            Log.d("data","testScheduler null");
+        }
 
         when(mockModel.obtenerPedidos(Mockito.eq("Dni"))).thenReturn(io.reactivex.Observable.just(pedidos));
 
