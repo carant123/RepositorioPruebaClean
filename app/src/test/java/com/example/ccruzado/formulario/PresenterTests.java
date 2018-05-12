@@ -8,8 +8,12 @@ import com.example.ccruzado.formulario.presentation.model.PedidoView;
 import com.example.ccruzado.formulario.presentation.model.mapper.PedidoMapper;
 import com.example.ccruzado.formulario.presentation.presenter.ListaPedidosPresenter;
 
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -19,7 +23,10 @@ import java.util.concurrent.Callable;
 import io.reactivex.Scheduler;
 import io.reactivex.android.plugins.RxAndroidPlugins;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.schedulers.TestScheduler;
+import rx.android.plugins.RxAndroidSchedulersHook;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -44,13 +51,22 @@ public class PresenterTests {
     io.reactivex.Observable<ArrayList<PedidoDomain>> observable;
     PedidoMapper mapper;
 
+    TestScheduler testScheduler;
+
+
+/*
+    @Rule
+    public RxSchedulersOverrideRule schedulersOverrideRule = new RxSchedulersOverrideRule();
+*/
+
+
     @Before
     public void setup() {
 
-
-
-
+        testScheduler = new TestScheduler();
         mockModel = mock(ListaPedidosMVP.Model.class);
+
+
 
         pedidos = new ArrayList<>();
         pedidosview = new ArrayList<>();
@@ -76,8 +92,10 @@ public class PresenterTests {
         mockView = mock(ListaPedidosMVP.View.class);
         //mockView = mock(ListaPedidosActivity.class);
         mapper = new PedidoMapper();
-        presenter = new ListaPedidosPresenter(mockModel,mapper,Schedulers.io(), AndroidSchedulers.mainThread());
+        //presenter = new ListaPedidosPresenter(mockModel,mapper,Schedulers.io(), AndroidSchedulers.mainThread());
+        presenter = new ListaPedidosPresenter(mockModel,mapper,testScheduler, testScheduler);
         presenter.setView(mockView);
+
 
 
 
@@ -85,10 +103,25 @@ public class PresenterTests {
 
 
     @Test
+    public void verificar_la_interaccion_cuando_llamas_a_la_carga_de_datos2() {
+
+        when(mockModel.obtenerPedidos("Dni")).thenReturn(observable.fromArray(pedidos));
+        when(mockView.cantidadPedidos()).thenReturn(3);
+        presenter.loadData("Dni");
+        verify(mockModel, times(1)).obtenerPedidos("Dni");
+        junit.framework.Assert.assertEquals(mockView.cantidadPedidos(),3);
+
+    }
+
+
+
+
+    @Test
     public void verificar_la_interaccion_cuando_llamas_a_la_carga_de_datos() {
 
+        //observable.fromArray(pedidos);
 
-        when(mockModel.obtenerPedidos("dni")).thenReturn(observable);
+        when(mockModel.obtenerPedidos(Mockito.eq("Dni"))).thenReturn(io.reactivex.Observable.just(pedidos));
 
         presenter.loadData("Dni");
 

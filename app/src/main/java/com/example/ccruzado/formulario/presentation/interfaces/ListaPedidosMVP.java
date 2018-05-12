@@ -15,6 +15,7 @@ public interface ListaPedidosMVP {
         void Error(String value);
         void showLoading();
         void hideLoading();
+        int cantidadPedidos();
     }
 
     interface Presenter {

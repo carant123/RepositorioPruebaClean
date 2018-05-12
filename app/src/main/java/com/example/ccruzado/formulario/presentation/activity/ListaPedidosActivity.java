@@ -39,7 +39,7 @@ public class ListaPedidosActivity extends BaseActivity implements ListaPedidosMV
 
     private Context mContext;
     private PedidosAdapter listaPedidosAdapter;
-    private ArrayList<PedidoView> pedidos = new ArrayList<PedidoView>();
+    public ArrayList<PedidoView> pedidos = new ArrayList<PedidoView>();
     private static final String TAG = ListaPedidosActivity.class.getSimpleName();
 
 
@@ -128,6 +128,11 @@ public class ListaPedidosActivity extends BaseActivity implements ListaPedidosMV
     }
 
     @Override
+    public int cantidadPedidos() {
+        return pedidos.size();
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         presenter.setView(this);
@@ -147,6 +152,9 @@ public class ListaPedidosActivity extends BaseActivity implements ListaPedidosMV
         pedidos.clear();
         listaPedidosAdapter.notifyDataSetChanged();
     }
+
+
+
 
 
 }

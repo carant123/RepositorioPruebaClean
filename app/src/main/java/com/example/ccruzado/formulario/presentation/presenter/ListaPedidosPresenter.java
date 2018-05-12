@@ -1,5 +1,7 @@
 package com.example.ccruzado.formulario.presentation.presenter;
 
+import android.util.Log;
+
 import com.example.ccruzado.formulario.domain.model.PedidoDomain;
 import com.example.ccruzado.formulario.presentation.interfaces.ListaPedidosMVP;
 import com.example.ccruzado.formulario.presentation.model.mapper.PedidoMapper;
@@ -48,8 +50,10 @@ public class ListaPedidosPresenter implements ListaPedidosMVP.Presenter {
     public void loadData(String Dni) {
         view.showLoading();
 
-        observable = model.obtenerPedidos(Dni)
-                .subscribeOn(backgroundScheduler)
+        observable = model.obtenerPedidos(Dni);
+
+
+        observable.subscribeOn(backgroundScheduler)
                 .observeOn(mainScheduler);
 
         disposableObserver_model = new DisposableObserver<ArrayList<PedidoDomain>>() {
